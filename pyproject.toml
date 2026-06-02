@@ -1,0 +1,19 @@
+[project]
+name = "rieman-ahmouri-synthesis-validator"
+version = "0.1.0"
+description = "Numerical-symbolic validator bridging Riemann zeta zeros and 59D geometric framework"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [ { name = "PHOTON-COURIER-NABIL" } ]
+dependencies = [
+    "numpy",
+    "scipy",
+    "sympy",
+    "mpmath",
+    "matplotlib",
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
