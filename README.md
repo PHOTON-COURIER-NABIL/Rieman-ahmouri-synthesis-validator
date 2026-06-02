@@ -67,6 +67,22 @@ Author: Abdelilah Ahmouri (2026) – From Intuition to Judgment + 59D Framework
 7 high-resolution figures (300 dpi) saved to current directory.
 ```
 
+## Nouveau module H59 positivity wall
+
+Un second script propre a été ajouté pour tester le mur de positivité du modèle H59 analogique.
+- Fichier principal : `h59_full_positivity_model.py`
+- Documentation rapide : `readme2.md`
+
+Ce module construit un opérateur H59 discret, compare plusieurs formes de terme de positivité et identifie la meilleure forme ainsi que le meilleur paramètre `alpha` en fonction des zéros de la fonction zêta.
+
+### Utilisation rapide du module H59
+
+```bash
+python3 h59_full_positivity_model.py --N 64 --alpha 0.5 --form quadratic
+python3 h59_full_positivity_model.py --sweep
+python3 h59_full_positivity_model.py --compare-zeta
+```
+
 Fichiers générés
 - Figure_1_Crossover_Law.png
 - Figure_2_LogLog.png

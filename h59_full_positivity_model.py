@@ -1,9 +1,176 @@
-# ==================== الكود الأول (message 4) ====================
-full updated function with six positivity forms. Just copy and run this: python import numpy as np def sweep_positivity_forms(N=128): zeros = np.array([14.13, 21.02, 25.01, 30.42, 32.94, 37.59, 40.92, 43.33]) x = np.linspace(0.01, 15, N) dx = x[1] - x[0] lap = (np.diag(-2 np.ones(N)) + np.diag(np.ones(N-1), 1) + np.diag(np.ones(N-1), -1)) / dx 2 forms = { ‘quadratic’: lambda x, a: a / (x 2 + 1), ‘exponential’: lambda x, a: a np.exp(-x), ‘inverse’: lambda x, a: a / (x + 1), ‘log’: lambda x, a: a / (np.log(x + 1.1) + 1), ‘oscillatory’: lambda x, a: a np.exp(-0.3 x) np.cos(0.8 x), ‘fractional’: lambda x, a: a / (x 0.7 + 1) } best_error = float(‘inf’) best_form = None for name, func in forms.items(): for alpha in np.linspace(0.1, 3.0, 12): pos = func(x, alpha) H = -lap + np.diag(pos) evals = np.sort(np.real(np.linalg.eigvals(H))) error = np.mean(np.abs(evals[:len(zeros)] - zeros)) if error < best_error: best_error = error best_form = (name, alpha, error) print(fBest match: {best_form[0]} form, alpha={best_form[1]:.2f}, error={best_form[2]:.3f}) return best_form sweep_positivity_forms()
+"""
+AHMOURI ABDELILAH
 
-# ==================== الكود الثاني (الرسالة الطويلة) ====================
-test different positivity wall forms against actual zeta zeros. python import numpy as np from scipy.special import zeta # for quick testing, use mpmath for precision later def test_positivity_form(pos_type=‘quadratic’, alpha=1.0, N=64): # Sample zeta zeros (imaginary parts) zeros = np.array([14.13, 21.02, 25.01, 30.42, 32.94, 37.59, 40.92, 43.33]) # Build simple operator grid x = np.linspace(0.01, 10, N) dx = x[1] - x[0] # Laplacian (second derivative) lap = np.diag(-2 np.ones(N)) + np.diag(np.ones(N-1),1) + np.diag(np.ones(N-1),-1) lap /= dx 2 # Positivity term - this is what we’re tuning if pos_type == ‘quadratic’: pos_wall = alpha / (x 2 + 1) elif pos_type == ‘exponential’: pos_wall = alpha np.exp(-x) elif pos_type == ‘inverse’: pos_wall = alpha / (x + 1) H = -lap + np.diag(pos_wall) evals = np.sort(np.real(np.linalg.eigvals(H))) # Compare first few eigenvalues to zeros diffs = np.abs(evals[:len(zeros)] - zeros) mean_error = np.mean(diffs) print(f{pos_type} (alpha={alpha:.2f}): mean error = {mean_error:.3f}) return mean_error Run this with different pos_type and alpha values. The form with the lowest mean error is your best positivity wall candidate.?
+Clean H59 positivity wall model for the 59D operator.
+This module builds a simple Hermitian H59 matrix, tests positivity wall functions,
+and compares the lowest eigenvalues against known Riemann zeta zero imaginary parts.
+"""
 
-quick sweep loop that tests a bunch of positivity forms automatically. Just copy and paste this: python import numpy as np def test_all_forms(N=128): zeros = np.array([14.13, 21.02, 25.01, 30.42, 32.94, 37.59, 40.92, 43.33]) x = np.linspace(0.01, 15, N) dx = x[1] - x[0] lap = (np.diag(-2 np.ones(N)) + np.diag(np.ones(N-1),1) + np.diag(np.ones(N-1),-1)) / dx 2 forms = [‘quadratic’, ‘exponential’, ‘inverse’, ‘linear’] results = [] for form in forms: for alpha in np.linspace(0.1, 3.0, 15): if form == ‘quadratic’: pos = alpha / (x 2 + 1) elif form == ‘exponential’: pos = alpha np.exp(-x) elif form == ‘inverse’: pos = alpha / (x + 1) elif form == ‘linear’: pos = alpha / (x + 0.1) H = -lap + np.diag(pos) evals = np.sort(np.real(np.linalg.eigvals(H))) error = np.mean(np.abs(evals[:len(zeros)] - zeros)) results.append((form, alpha, error)) best = min(results, key=lambda x: x[2]) print(fBest match: {best[0]} form, alpha={best[1]:.2f}, error={best[2]:.3f}) return best test_all_forms() 
+import argparse
+import numpy as np
+from mpmath import mp, zeta as mpmath_zeta
 
-Add to loop three more advanced positivity functions to test — each with a different physical motivation. Add these to your loop: 1. Logarithmic decay — motivated by renormalization flow: pos = alpha / (np.log(x + 1.1) + 1) 2. Oscillatory damping — echoes zeta’s own oscillations: pos = alpha np.exp(-0.3 x) np.cos(0.8 x) 3. Fractional power — inspired by dimensional scaling: pos = alpha / (x 0.7 + 1) After running the sweep, check which one gives the lowest mean error against the real zeta zeros. The winner tells you which mathematical behavior the positivity wall actually follows in your 59D operator.
+mp.dps = 50
+
+ZETA_ZERO_LIST = [
+    14.134725,
+    21.022040,
+    25.010858,
+    30.424876,
+    32.935062,
+    37.586178,
+    40.918719,
+    43.327073,
+    48.005151,
+    49.773832,
+]
+
+DEFAULT_FORMS = [
+    'quadratic',
+    'exponential',
+    'inverse',
+    'log',
+    'oscillatory',
+    'fractional',
+    'linear',
+]
+
+
+def finite_difference_laplacian(N, x):
+    dx = x[1] - x[0]
+    main = -2.0 * np.ones(N)
+    off = np.ones(N - 1)
+    lap = np.diag(main) + np.diag(off, 1) + np.diag(off, -1)
+    return lap / dx**2
+
+
+def positivity_wall(x, alpha, form='quadratic'):
+    if form == 'quadratic':
+        return alpha / (x**2 + 1)
+    if form == 'exponential':
+        return alpha * np.exp(-x)
+    if form == 'inverse':
+        return alpha / (x + 1)
+    if form == 'log':
+        return alpha / (np.log(x + 1.1) + 1)
+    if form == 'oscillatory':
+        return alpha * np.exp(-0.3 * x) * np.cos(0.8 * x)
+    if form == 'fractional':
+        return alpha / (x**0.7 + 1)
+    if form == 'linear':
+        return alpha / (x + 0.1)
+    raise ValueError(f'Unknown positivity form: {form}')
+
+
+def build_H59_operator(
+    N,
+    alpha=0.5,
+    form='quadratic',
+    x_min=0.01,
+    x_max=15.0,
+    weights=(29 / 59, 1 / 59),
+):
+    x = np.linspace(x_min, x_max, N)
+    lap = finite_difference_laplacian(N, x)
+    pos = positivity_wall(x, alpha, form)
+    oscillator = np.diag(x**2)
+    core = -lap + np.diag(pos)
+    H = weights[0] * core + weights[1] * oscillator
+    return H
+
+
+def mean_zero_error(eigvals, zeros):
+    count = min(len(eigvals), len(zeros))
+    return np.mean(np.abs(eigvals[:count] - zeros[:count]))
+
+
+def test_positivity_form(pos_type='quadratic', alpha=1.0, N=64):
+    zeros = np.array(ZETA_ZERO_LIST[:8])
+    H = build_H59_operator(N, alpha=alpha, form=pos_type)
+    evals = np.linalg.eigvalsh(H)
+    error = mean_zero_error(np.sort(np.real(evals)), zeros)
+    print(f'{pos_type} (alpha={alpha:.2f}): mean error = {error:.6f}')
+    return error
+
+
+def test_all_forms(N=128, forms=None, alphas=None):
+    if forms is None:
+        forms = DEFAULT_FORMS
+    if alphas is None:
+        alphas = np.linspace(0.1, 3.0, 15)
+
+    zeros = np.array(ZETA_ZERO_LIST[:8])
+    results = []
+
+    for form in forms:
+        for alpha in alphas:
+            H = build_H59_operator(N, alpha=alpha, form=form)
+            evals = np.linalg.eigvalsh(H)
+            error = mean_zero_error(np.sort(np.real(evals)), zeros)
+            results.append((form, float(alpha), float(error)))
+
+    best = min(results, key=lambda x: x[2])
+    print(
+        f'Best match: {best[0]} form, alpha={best[1]:.2f}, error={best[2]:.6f}'
+    )
+    return best
+
+
+def sweep_positivity_forms(N=128):
+    print('Running full positivity wall sweep...')
+    best = test_all_forms(N=N)
+    return best
+
+
+def compare_to_zeta_critical_line(num_zeros=5):
+    print('Comparing the first zeta zeros on the critical line:')
+    for i, t in enumerate(ZETA_ZERO_LIST[:num_zeros], start=1):
+        s = 0.5 + t * 1j
+        z = mpmath_zeta(s)
+        print(f'  t_{i} = {t:.6f}  →  zeta(0.5 + {t:.6f}j) = {z}')
+
+
+def run_h59_demo(
+    N=64,
+    alpha=0.5,
+    form='quadratic',
+    sweep=False,
+    compare_zeta=False,
+):
+    print('AHMOURI ABDELILAH - H59 positivity wall model')
+    if sweep:
+        best = sweep_positivity_forms(N=N)
+        return best
+
+    print(f'Building H59 operator with N={N}, form={form}, alpha={alpha:.2f}')
+    H = build_H59_operator(N, alpha=alpha, form=form)
+    eigvals = np.linalg.eigvalsh(H)
+    zeros = np.array(ZETA_ZERO_LIST[:8])
+    error = mean_zero_error(np.sort(np.real(eigvals)), zeros)
+    print(f'  First eigenvalues: {np.sort(np.real(eigvals))[:5]}')
+    print(f'  Mean error vs. first zeros: {error:.6f}')
+
+    if compare_zeta:
+        compare_to_zeta_critical_line(num_zeros=min(5, len(zeros)))
+
+    return float(error)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='H59 positivity wall model for the Riemann zeta operator'
+    )
+    parser.add_argument('--N', type=int, default=64, help='Grid size for the operator')
+    parser.add_argument('--alpha', type=float, default=0.5, help='Positivity wall amplitude')
+    parser.add_argument('--form', type=str, default='quadratic', help='Positivity form')
+    parser.add_argument('--sweep', action='store_true', help='Run full form sweep')
+    parser.add_argument('--compare-zeta', action='store_true', help='Show zeta values on critical line')
+    args = parser.parse_args()
+
+    run_h59_demo(
+        N=args.N,
+        alpha=args.alpha,
+        form=args.form,
+        sweep=args.sweep,
+        compare_zeta=args.compare_zeta,
+    )
