@@ -11,3 +11,13 @@ Réponse
 
 Divulgation responsable
 - Ne publiez pas publiquement les détails techniques d'une vulnérabilité avant qu'un correctif soit disponible.
+
+Configuration GitHub recommandée
+- Activez la protection de branche pour `main`.
+- Exigez les revues de pull request avant fusion.
+- Exigez l'approbation des code owners (`.github/CODEOWNERS`).
+- Exigez les vérifications de statut suivantes avant fusion :
+  - `run-script` (CI)
+  - `analyze` (CodeQL)
+- Exigez que les GitHub Actions utilisent des workflows vérifiés et un `PYPI_API_TOKEN` pour les publications.
+- Activez le scanner de secrets GitHub si disponible pour éviter les fuites de clés dans le code.
