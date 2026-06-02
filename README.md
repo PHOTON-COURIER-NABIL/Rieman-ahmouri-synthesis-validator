@@ -33,55 +33,55 @@ This synthesis demonstrates a concrete **physics-to-mathematics bridge**: the sp
 ### Installation
 
 ```bash
+# Install dependencies
+### Installation
+
+```bash
 # Clone the repository
 git clone https://github.com/PHOTON-COURIER-NABIL/Rieman-ahmouri-synthesis-validator.git
 cd Rieman-ahmouri-synthesis-validator
 
-# Install dependencies
-pip install numpy scipy sympy mpmath
+# Install dependencies (recommended)
+pip install -r requirements.txt
+```
 
+### Usage
 
+```bash
+python3 riemann_ahmouri_validator.py
+```
 
-Usagebash
+### Exemple de sortie
 
+```
+=== RIEMANN-AHMOURI SYNTHESIS VALIDATOR v2.0 (with paper figures) ===
+Author: Abdelilah Ahmouri (2026) – From Intuition to Judgment + 59D Framework
+[INFO] H59 operator constructed symbolically (59D geometric framework).
+--- SPECTRAL VALIDATION (From Intuition to Judgment) ---
+ [PASS] A2_Crossover_Variance
+ [PASS] A4_Trace_Collapse
+ [FAIL] A3_Mirror_Symmetry
+ [PASS] A7_Symmetry_Positivity_Dichotomy
 
-python riemann_ahmouri_validator.py
+=== GENERATING PAPER FIGURES (exact match to Ahmouri 2026) ===
+7 high-resolution figures (300 dpi) saved to current directory.
+```
 
+Fichiers générés
+- Figure_1_Crossover_Law.png
+- Figure_2_LogLog.png
+- Figure_3_Dimensional_Collapse.png
+- Figure_4_Dichotomy.png
+- Figure_5_GUE_Spacing.png
+- Figure_6_Explicit_Formula.png
+- Figure_7_59D_Framework.png
 
+### Remarques
 
-Example Output
+- Le calcul des zéros de la fonction zêta peut être lent si le nombre de zéros est élevé. Le script actuel utilise 100 zéros pour accélérer l'exécution et éviter des conversions coûteuses.
+- Pour restaurer 400 zéros, éditez la fonction `generate_paper_figures` dans `riemann_ahmouri_validator.py`.
 
+### Licence
 
-=== Riemann-Ahmouri Validator Starting ===
-Matrix size: 100 | Coupling g = 0.5
-Symbolic operator constructed.
-Numerical matrix constructed.
-
-Results:
-Percentage on critical line: XX.XXXX%
-Maximum deviation: X.XXe-XX
-✅ Strong validation: Hypothesis appears supported in this model.
-
-
-
-Filesriemann_ahmouri_validator.py — Core validator class (numerical + symbolic implementation)
-
-README.md — This file
-
-.gitignore & LICENSE — Standard project configuration
-
-
-
-Future WorkImplementation of full 59D GinOE ensemble sampling
-
-Exact paper figure reproduction (positivity wall plots)
-
-Higher-dimensional operator extensions
-
-Statistical analysis of zero spacing (GUE/GinOE comparison) 
-
-
-
-CitationIf you use this code in your research, please cite:Abdelilah Ahmouri, “Riemann Hypothesis in the Spectral & 59D Geometric Framework,” 2026.
-
+MIT License © PHOTON-COURIER-NABIL (2026)
 LicenseMIT License © PHOTON-COURIER-Nbl-AHMOURI (2026)

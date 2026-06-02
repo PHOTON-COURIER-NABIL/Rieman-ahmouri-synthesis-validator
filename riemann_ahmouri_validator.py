@@ -170,7 +170,9 @@ class RiemannAhmouriValidator:
         print("   ✓ Figure 4 saved")
 
         # Figure 5: GUE Spacing (real zeros + simulation)
-        zeros = [mp.im(mp.zetazero(i)) for i in range(1,401)]
+        # Compute a reasonable number of zeta zeros as floats to keep
+        # numpy/matplotlib happy and avoid object-dtype arrays.
+        zeros = np.array([float(mp.im(mp.zetazero(i))) for i in range(1,101)])
         diffs = np.diff(zeros)
         mean_spacing = np.mean(diffs)
         normalized = diffs / mean_spacing
