@@ -37,10 +37,6 @@ This synthesis demonstrates a concrete **physics-to-mathematics bridge**: the sp
 ### Installation
 
 ```bash
-# Install dependencies
-### Installation
-
-```bash
 # Clone the repository
 git clone https://github.com/PHOTON-COURIER-NABIL/Rieman-ahmouri-synthesis-validator.git
 cd Rieman-ahmouri-synthesis-validator
@@ -88,4 +84,3 @@ Fichiers générés
 ### Licence
 
 MIT License © PHOTON-COURIER-NABIL (2026)
-LicenseMIT License © PHOTON-COURIER-Nbl-AHMOURI (2026)
