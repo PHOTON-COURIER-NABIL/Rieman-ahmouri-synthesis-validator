@@ -78,7 +78,7 @@ Exact paper figure reproduction (positivity wall plots)
 
 Higher-dimensional operator extensions
 
-Statistical analysis of zero spacing (GUE/GinOE comparison)
+Statistical analysis of zero spacing (GUE/GinOE comparison) 
 
 
 
