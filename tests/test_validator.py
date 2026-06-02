@@ -1,4 +1,11 @@
 import os
+import sys
+import pathlib
+
+# Ensure repository root is on sys.path for imports during tests
+root = pathlib.Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(root))
+
 from riemann_ahmouri_validator import RiemannAhmouriValidator
 
 
