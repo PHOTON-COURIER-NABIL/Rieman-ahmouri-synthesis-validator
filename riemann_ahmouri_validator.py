@@ -50,11 +50,14 @@ import sympy as sp
 import mpmath as mp
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
+import os
+import argparse
 
 class RiemannAhmouriValidator:
-    def __init__(self, matrix_size=100, coupling_g=0.5):   # n=100 as in the paper
-        self.N = matrix_size
-        self.g = coupling_g
+    def __init__(self, matrix_size=100, coupling_g=0.5, nzeros=100):   # n=100 as in the paper
+      self.N = matrix_size
+      self.g = coupling_g
+      self.nzeros = int(nzeros)
         np.random.seed(12345)
         mp.mp.dps = 30
         
@@ -99,8 +102,13 @@ class RiemannAhmouriValidator:
         M = np.array([[0.6, 0.3],[0.3, 0.4]])
         print(f"\n[POSITIVITY WALL] Counter-example spectrum: {linalg.eigvalsh(M)}")
 
-    def generate_paper_figures(self):
-        """Generate all figures from the two papers with 100% numerical fidelity."""
+    def generate_paper_figures(self, output_dir=None):
+      """Generate all figures from the two papers with 100% numerical fidelity.
+
+      output_dir: optional directory to save the PNG files (defaults to cwd).
+      """
+      if output_dir is None:
+        output_dir = os.getcwd()
         print("\n=== GENERATING PAPER FIGURES (exact match to Ahmouri 2026) ===")
         
         # Figure 1 + Table 1: Exact Crossover Law
@@ -122,7 +130,7 @@ class RiemannAhmouriValidator:
         plt.title('Figure 1 – Exact Crossover Law (Ahmouri 2026)')
         plt.legend()
         plt.grid(True, which='both')
-        plt.savefig('Figure_1_Crossover_Law.png', dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(output_dir, 'Figure_1_Crossover_Law.png'), dpi=300, bbox_inches='tight')
         print("   ✓ Figure 1 saved")
 
         # Figure 2: log-log analysis of apparent exponent
@@ -139,7 +147,7 @@ class RiemannAhmouriValidator:
         plt.xscale('log'); plt.yscale('log')
         plt.title('Figure 2(b) – Exact rational law (no -0.8)')
         plt.xlabel('g'); plt.ylabel('Var(Re λ)')
-        plt.savefig('Figure_2_LogLog.png', dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(output_dir, 'Figure_2_LogLog.png'), dpi=300, bbox_inches='tight')
         print("   ✓ Figure 2 saved")
 
         # Figure 3: Dimensional Collapse
@@ -153,7 +161,7 @@ class RiemannAhmouriValidator:
         plt.title('Figure 3 – Exact Dimensional Collapse det Σ = 0')
         plt.legend()
         plt.grid()
-        plt.savefig('Figure_3_Dimensional_Collapse.png', dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(output_dir, 'Figure_3_Dimensional_Collapse.png'), dpi=300, bbox_inches='tight')
         print("   ✓ Figure 3 saved")
 
         # Figure 4: Symmetry–Positivity Dichotomy
@@ -166,13 +174,13 @@ class RiemannAhmouriValidator:
         ax2.plot([0.3,0.7],[0.2,0.8],'ro', label='off line')
         ax2.set_title('Non-trivial U=J (symmetric but off ½)')
         plt.suptitle('Figure 4 – Symmetry–Positivity Dichotomy')
-        plt.savefig('Figure_4_Dichotomy.png', dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(output_dir, 'Figure_4_Dichotomy.png'), dpi=300, bbox_inches='tight')
         print("   ✓ Figure 4 saved")
 
         # Figure 5: GUE Spacing (real zeros + simulation)
         # Compute a reasonable number of zeta zeros as floats to keep
         # numpy/matplotlib happy and avoid object-dtype arrays.
-        zeros = np.array([float(mp.im(mp.zetazero(i))) for i in range(1,101)])
+        zeros = np.array([float(mp.im(mp.zetazero(i))) for i in range(1, self.nzeros+1)])
         diffs = np.diff(zeros)
         mean_spacing = np.mean(diffs)
         normalized = diffs / mean_spacing
@@ -183,7 +191,7 @@ class RiemannAhmouriValidator:
         plt.title('Figure 5 – GUE Spacing Distribution')
         plt.xlabel('normalized spacing')
         plt.legend()
-        plt.savefig('Figure_5_GUE_Spacing.png', dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(output_dir, 'Figure_5_GUE_Spacing.png'), dpi=300, bbox_inches='tight')
         print("   ✓ Figure 5 saved")
 
         # Figure 6: Explicit Formula (prime tones)
@@ -195,7 +203,7 @@ class RiemannAhmouriValidator:
         plt.title('Figure 6 – Explicit Formula made audible')
         plt.xlabel('logarithmic time u')
         plt.legend()
-        plt.savefig('Figure_6_Explicit_Formula.png', dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(output_dir, 'Figure_6_Explicit_Formula.png'), dpi=300, bbox_inches='tight')
         print("   ✓ Figure 6 saved")
 
         # Figure 7: 59D Geometric Framework
@@ -204,7 +212,7 @@ class RiemannAhmouriValidator:
         plt.bar(dims.keys(), dims.values(), color='purple')
         plt.title('Figure 7 – 59-Dimensional Geometric Unification\n59 = 11 + 6×8')
         plt.ylabel('Dimension')
-        plt.savefig('Figure_7_59D_Framework.png', dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join(output_dir, 'Figure_7_59D_Framework.png'), dpi=300, bbox_inches='tight')
         print("   ✓ Figure 7 saved")
 
         print("\n7 high-resolution figures (300 dpi) saved to current directory.")
@@ -224,14 +232,21 @@ class RiemannAhmouriValidator:
 
 # ====================== RUN VALIDATION ======================
 if __name__ == "__main__":
-    print("=== RIEMANN-AHMOURI SYNTHESIS VALIDATOR v2.0 (with paper figures) ===\n")
-    print("Author: Abdelilah Ahmouri (2026) – From Intuition to Judgment + 59D Framework")
-    
-    validator = RiemannAhmouriValidator()
-    validator.symbolic_operator_construction()
-    validator.execute_spectral_checks()
-    validator.generate_paper_figures()
-    validator.run_master_verification_sim()
-    validator.fetch_riemann_zeta_proxies()
-    
-    print("\nCode complete – 100% faithful to both papers. Figures ready for publication.")
+  parser = argparse.ArgumentParser(description='Riemann-Ahmouri synthesis validator')
+  parser.add_argument('--matrix-size', type=int, default=100)
+  parser.add_argument('--g', type=float, default=0.5)
+  parser.add_argument('--nzeros', type=int, default=100, help='Number of zeta zeros to compute')
+  parser.add_argument('--out', type=str, default='.', help='Output directory for figures')
+  args = parser.parse_args()
+
+  print("=== RIEMANN-AHMOURI SYNTHESIS VALIDATOR v2.0 (with paper figures) ===\n")
+  print("Author: Abdelilah Ahmouri (2026) – From Intuition to Judgment + 59D Framework")
+
+  validator = RiemannAhmouriValidator(matrix_size=args.matrix_size, coupling_g=args.g, nzeros=args.nzeros)
+  validator.symbolic_operator_construction()
+  validator.execute_spectral_checks()
+  validator.generate_paper_figures(output_dir=args.out)
+  validator.run_master_verification_sim()
+  validator.fetch_riemann_zeta_proxies()
+
+  print("\nCode complete – 100% faithful to both papers. Figures ready for publication.")
