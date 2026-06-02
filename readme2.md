@@ -13,6 +13,7 @@ Ce module construit un opérateur H59 discret simple, teste plusieurs formes de 
 ## Fichiers
 
 - `h59_full_positivity_model.py` : module principal
+- `h59_analysis.py` : script d'analyse approfondie
 - `readme2.md` : documentation rapide
 
 ## Installation
@@ -40,6 +41,14 @@ python3 h59_full_positivity_model.py --sweep
 ```bash
 python3 h59_full_positivity_model.py --compare-zeta
 ```
+
+### Analyse avancée
+
+```bash
+python3 h59_analysis.py --output-dir /tmp/h59_analysis --N 256 --alpha-count 30
+```
+
+Les fichiers résultants seront sauvegardés dans `--output-dir`, et أرشيف ZIP سيُنشأ تلقائياً.
 
 ## Formes de positivité testées
 
