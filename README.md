@@ -97,6 +97,22 @@ Fichiers générés
 - Le calcul des zéros de la fonction zêta peut être lent si le nombre de zéros est élevé. Le script actuel utilise 100 zéros pour accélérer l'exécution et éviter des conversions coûteuses.
 - Pour restaurer 400 zéros, éditez la fonction `generate_paper_figures` dans `riemann_ahmouri_validator.py`.
 
+## Analyse paramétrique (nouveau)
+
+Un utilitaire `analysis.py` a été ajouté pour lancer des explorations paramétriques du modèle H59 et tester plusieurs normalisations d'opérateur.
+
+Usage rapide :
+
+```bash
+python3 analysis.py --out results/analysis_results_quick2.csv --quick
+```
+
+Résultats rapides sont ajoutés dans le dépôt sous :
+- [results/analysis_results_quick2.csv](results/analysis_results_quick2.csv)
+- [results/analysis_results_quick2.json](results/analysis_results_quick2.json)
+
+Le script produit également un histogramme des erreurs (PNG) lorsque possible.
+
 ### Licence
 
 MIT License © PHOTON-COURIER-NABIL (2026)
