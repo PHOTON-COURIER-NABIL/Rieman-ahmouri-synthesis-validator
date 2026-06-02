@@ -1,15 +1,15 @@
 # Riemann-Ahmouri Synthesis Validator
 
-**Reproducible Python validator** for the **Riemann Hypothesis** within the spectral & 5D geometric framework proposed by Abdelilah Ahmouri (2026).
+**Reproducible Python validator** for the **Riemann Hypothesis** within the spectral & 59D geometric framework proposed by Abdelilah Ahmouri (2026).
 
-This repository implements a unified **numerical-symbolic validator** that bridges **mathematics** (analytic number theory and the Riemann zeta function) with **physics** (quantum mechanical spectral operators and 5D geometric models). It tests the emergence of the critical line Re(s) = 0.5 through discretization of an elliptic differential operator inspired by the H59 operator in the positivity wall framework (Elliptic GinOE ensemble).
+This repository implements a unified **numerical-symbolic validator** that bridges **mathematics** (analytic number theory and the Riemann zeta function) with **physics** (quantum mechanical spectral operators and 59D geometric models). It tests the emergence of the critical line Re(s) = 0.5 through discretization of an elliptic differential operator inspired by the H59 operator in the positivity wall framework (Elliptic GinOE ensemble).
 
 ### Mathematical & Physical Foundation
 
 The Riemann Hypothesis (RH) conjectures that all non-trivial zeros of the Riemann zeta function lie on the critical line Re(s) = 1/2. A long-standing approach to proving RH is the **Hilbert–Pólya conjecture**, which posits that these zeros correspond to the eigenvalues of a self-adjoint operator arising in quantum mechanics.
 
-In the **Ahmouri 5D geometric synthesis**:
-- A 1D effective elliptic operator is derived from the 5D compactified geometry.
+In the **Ahmouri 59D geometric synthesis**:
+- A 1D effective elliptic operator is derived from the 59D compactified geometry.
 - The operator takes the form:
   \[
   \mathcal{L}\psi = -\frac{d^2\psi}{dx^2} + (x^2 + g x^4)\psi
@@ -19,7 +19,7 @@ In the **Ahmouri 5D geometric synthesis**:
 - Symbolic construction (via SymPy) ensures exact operator definition before numerical approximation.
 - The model explicitly incorporates **Elliptic Ginibre Orthogonal Ensemble (GinOE)** statistics and the **H59 operator** structure, reproducing key features from the original 2026 paper.
 
-This synthesis demonstrates a concrete **physics-to-mathematics bridge**: the spectral properties of a physically motivated Hamiltonian in a 5D framework naturally generate eigenvalue distributions consistent with the Riemann critical line.
+This synthesis demonstrates a concrete **physics-to-mathematics bridge**: the spectral properties of a physically motivated Hamiltonian in a 59D framework naturally generate eigenvalue distributions consistent with the Riemann critical line.
 
 ### Features
 
@@ -72,7 +72,7 @@ README.md — This file
 
 
 
-Future WorkImplementation of full 5D GinOE ensemble sampling
+Future WorkImplementation of full 59D GinOE ensemble sampling
 
 Exact paper figure reproduction (positivity wall plots)
 
