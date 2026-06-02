@@ -82,6 +82,6 @@ Statistical analysis of zero spacing (GUE/GinOE comparison)
 
 
 
-CitationIf you use this code in your research, please cite:Abdelilah Ahmouri, “Riemann Hypothesis in the Spectral & 5D Geometric Framework,” 2026.
+CitationIf you use this code in your research, please cite:Abdelilah Ahmouri, “Riemann Hypothesis in the Spectral & 59D Geometric Framework,” 2026.
 
 LicenseMIT License © PHOTON-COURIER-Nbl-AHMOURI (2026)
