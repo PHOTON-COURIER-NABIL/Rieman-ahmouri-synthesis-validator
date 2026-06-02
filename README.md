@@ -2,6 +2,8 @@
 
 **Reproducible Python validator** for the **Riemann Hypothesis** within the spectral & 59D geometric framework proposed by Abdelilah Ahmouri (2026).
 
+![CI](https://github.com/PHOTON-COURIER-NABIL/Rieman-ahmouri-synthesis-validator/actions/workflows/ci.yml/badge.svg)
+
 This repository implements a unified **numerical-symbolic validator** that bridges **mathematics** (analytic number theory and the Riemann zeta function) with **physics** (quantum mechanical spectral operators and 59D geometric models). It tests the emergence of the critical line Re(s) = 0.5 through discretization of an elliptic differential operator inspired by the H59 operator in the positivity wall framework (Elliptic GinOE ensemble).
 
 ### Mathematical & Physical Foundation

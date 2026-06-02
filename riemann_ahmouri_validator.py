@@ -54,7 +54,7 @@ import os
 import argparse
 
 class RiemannAhmouriValidator:
-    def __init__(self, matrix_size=100, coupling_g=0.5, nzeros=100):   # n=100 as in the paper
+    def __init__(self, matrix_size=100, coupling_g=0.5, nzeros=400):   # n=100 as in the paper
         self.N = matrix_size
         self.g = coupling_g
         self.nzeros = int(nzeros)
@@ -235,7 +235,7 @@ if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Riemann-Ahmouri synthesis validator')
   parser.add_argument('--matrix-size', type=int, default=100)
   parser.add_argument('--g', type=float, default=0.5)
-  parser.add_argument('--nzeros', type=int, default=100, help='Number of zeta zeros to compute')
+  parser.add_argument('--nzeros', type=int, default=400, help='Number of zeta zeros to compute')
   parser.add_argument('--out', type=str, default='.', help='Output directory for figures')
   args = parser.parse_args()
 
