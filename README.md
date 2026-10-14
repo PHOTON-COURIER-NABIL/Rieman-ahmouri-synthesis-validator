@@ -1,16 +1,47 @@
 # Riemann-Ahmouri Synthesis Validator
 
+> Status: experimental numerical-scientific prototype. This repository is intended for reproducible exploration of the Riemann Hypothesis in a 59D geometric/spectral framework, not as a formal proof or a production-grade scientific package.
+
 **Reproducible Python validator** for the **Riemann Hypothesis** within the spectral & 59D geometric framework proposed by Abdelilah Ahmouri (2026).
 
-![CI](https://github.com/PHOTON-COURIER-NABIL/Rieman-ahmouri-synthesis-validator/actions/workflows/ci.yml/badge.svg)
-![Release](https://img.shields.io/github/v/release/PHOTON-COURIER-NABIL/Rieman-ahmouri-synthesis-validator)
-![PyPI](https://img.shields.io/pypi/v/rieman-ahmouri-synthesis-validator?label=PyPI)
+This repository implements a unified **numerical-symbolic validator** that bridges **mathematics** (analytic number theory and the Riemann zeta function) with **physics** (quantum mechanical spectra and geometric operator models).
 
-This repository implements a unified **numerical-symbolic validator** that bridges **mathematics** (analytic number theory and the Riemann zeta function) with **physics** (quantum mechanical spectral operators and 59D geometric models). It tests the emergence of the critical line Re(s) = 0.5 through discretization of an elliptic differential operator inspired by the H59 operator in the positivity wall framework (Elliptic GinOE ensemble).
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/PHOTON-COURIER-NABIL/Rieman-ahmouri-synthesis-validator.git
+cd Rieman-ahmouri-synthesis-validator
+
+# Install dependencies (recommended)
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+```
+
+## Security and validation
+
+```bash
+pytest -q --maxfail=1
+bandit -r . -q -x ./tests
+pip-audit --requirement requirements.txt
+```
+
+## Usage
+
+```bash
+python3 riemann_ahmouri_validator.py
+python3 h59_full_positivity_model.py --N 64 --alpha 0.5 --form quadratic
+python3 analysis.py --out results/analysis_results_quick2.csv --quick
+```
+
+## Notes
+
+- The project is a reproducible research prototype and should be interpreted as a numerical exploration tool rather than a formal proof.
+- Results are intended to be auditable, reproducible, and transparent, with pinned dependencies and automated security quality checks.
 
 ### Mathematical & Physical Foundation
 
-The Riemann Hypothesis (RH) conjectures that all non-trivial zeros of the Riemann zeta function lie on the critical line Re(s) = 1/2. A long-standing approach to proving RH is the **Hilbert–Pólya conjecture**, which posits that these zeros correspond to the eigenvalues of a self-adjoint operator arising in quantum mechanics.
+The Riemann Hypothesis (RH) conjectures that all non-trivial zeros of the Riemann zeta function lie on the critical line Re(s) = 1/2. A long-standing approach to proving RH is the **Hilbert–Pólya** framework and related spectral interpretations.
 
 In the **Ahmouri 59D geometric synthesis**:
 - A 1D effective elliptic operator is derived from the 59D compactified geometry.
@@ -23,8 +54,6 @@ In the **Ahmouri 59D geometric synthesis**:
 - Symbolic construction (via SymPy) ensures exact operator definition before numerical approximation.
 - The model explicitly incorporates **Elliptic Ginibre Orthogonal Ensemble (GinOE)** statistics and the **H59 operator** structure, reproducing key features from the original 2026 paper.
 
-This synthesis demonstrates a concrete **physics-to-mathematics bridge**: the spectral properties of a physically motivated Hamiltonian in a 59D framework naturally generate eigenvalue distributions consistent with the Riemann critical line.
-
 ### Features
 
 - **Symbolic operator construction** — Exact differential operator using SymPy.
@@ -33,23 +62,6 @@ This synthesis demonstrates a concrete **physics-to-mathematics bridge**: the sp
 - **Critical-line validation** — Automatic percentage calculation and maximum deviation from Re(s) = 0.5.
 - **Configurable parameters** — Matrix size and coupling \(g\) for sensitivity studies.
 - **Reproducible & documented** — Full traceability from theory to code.
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/PHOTON-COURIER-NABIL/Rieman-ahmouri-synthesis-validator.git
-cd Rieman-ahmouri-synthesis-validator
-
-# Install dependencies (recommended)
-pip install -r requirements.txt
-```
-
-### Usage
-
-```bash
-python3 riemann_ahmouri_validator.py
-```
 
 ### Exemple de sortie
 
@@ -72,8 +84,6 @@ Author: Abdelilah Ahmouri (2026) – From Intuition to Judgment + 59D Framework
 Un second script propre a été ajouté pour tester le mur de positivité du modèle H59 analogique.
 - Fichier principal : `h59_full_positivity_model.py`
 - Documentation rapide : `readme2.md`
-
-Ce module construit un opérateur H59 discret, compare plusieurs formes de terme de positivité et identifie la meilleure forme ainsi que le meilleur paramètre `alpha` en fonction des zéros de la fonction zêta.
 
 ### Utilisation rapide du module H59
 
@@ -108,8 +118,8 @@ python3 analysis.py --out results/analysis_results_quick2.csv --quick
 ```
 
 Résultats rapides sont ajoutés dans le dépôt sous :
-- [results/analysis_results_quick2.csv](results/analysis_results_quick2.csv)
-- [results/analysis_results_quick2.json](results/analysis_results_quick2.json)
+- `results/analysis_results_quick2.csv`
+- `results/analysis_results_quick2.json`
 
 Le script produit également un histogramme des erreurs (PNG) lorsque possible.
 
