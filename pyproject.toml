@@ -8,7 +8,7 @@ license = { text = "MIT" }
 authors = [ { name = "PHOTON-COURIER-NABIL" } ]
 dependencies = [
     "numpy==1.26.4",
-    "scipy==1.11.4",
+    "scipy==1.15.3",
     "sympy==1.12",
     "mpmath==1.3.0",
     "matplotlib==3.8.4",
